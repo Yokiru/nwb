@@ -176,6 +176,19 @@
             function renderOrderResult(order) {
                 const statusInfo = getStatusInfo(order.status);
 
+                // Calculate queue if pending or in_progress
+                let queueInfo = '';
+                if (['pending', 'in_progress'].includes(order.status)) {
+                    // This will be populated async
+                    queueInfo = `<div class="detail-item" id="queue-display">
+                        <span class="detail-label">Antrian</span>
+                        <span class="detail-value"><span class="loading-dots">Menghitung...</span></span>
+                    </div>`;
+
+                    // Trigger calc
+                    calculateQueue(order.id, order.created_at);
+                }
+
                 orderResult.innerHTML = `
                 <div class="result-card">
                     <div class="result-header">
@@ -220,6 +233,17 @@
                     <div class="result-details">
                         <h3>Detail Pesanan</h3>
                         <div class="detail-grid">
+                            ${order.price ? `
+                            <div class="detail-item">
+                                <span class="detail-label">Harga</span>
+                                <span class="detail-value" style="color: #4ade80; font-weight: bold;">Rp ${Number(order.price).toLocaleString('id-ID')}</span>
+                            </div>` : ''}
+                            ${order.estimated_duration ? `
+                            <div class="detail-item">
+                                <span class="detail-label">Estimasi Pengerjaan</span>
+                                <span class="detail-value">${order.estimated_duration} Jam</span>
+                            </div>` : ''}
+                            ${queueInfo}
                             <div class="detail-item">
                                 <span class="detail-label">Judul</span>
                                 <span class="detail-value">${order.judul}</span>
@@ -338,8 +362,35 @@
                     input.value = '';
                 });
             }
+            async function calculateQueue(currentOrderId, createdAt) {
+                // Count orders with status pending or in_progress that are OLDER than this one
+                // Using .lt for created_at to find orders ahead in queue
+
+                try {
+                    const { count, error } = await db
+                        .from('orders')
+                        .select('*', { count: 'exact', head: true })
+                        .in('status', ['pending', 'in_progress'])
+                        .lt('created_at', createdAt);
+
+                    if (!error) {
+                        const queueDisplay = document.getElementById('queue-display');
+                        if (queueDisplay) {
+                            // Position is count + 1 (if 0 ahead, you are 1st)
+                            const position = count + 1;
+                            const valueEl = queueDisplay.querySelector('.detail-value');
+                            valueEl.textContent = `Urutan ke-${position}`;
+                            valueEl.style.color = '#fbbf24'; // Warning color for visibility
+                            valueEl.style.fontWeight = 'bold';
+                        }
+                    }
+                } catch (e) {
+                    console.error("Queue calc error:", e);
+                }
+            }
         })();
     </script>
 </body>
 
 </html>
+```

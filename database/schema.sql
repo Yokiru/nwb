@@ -16,6 +16,7 @@ CREATE TABLE orders (
     info_lainnya TEXT,
     status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'in_progress', 'revision', 'completed', 'cancelled')),
     price DECIMAL(12,0) DEFAULT NULL,
+    estimated_duration INTEGER DEFAULT NULL,
     admin_notes TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())

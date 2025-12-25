@@ -769,14 +769,23 @@
                     <div class="section-title">Harga</div>
                     <div class="price-section">
                         <div class="price-row">
-                            <span class="price-prefix">Rp</span>
-                            <input type="number" class="price-input" id="price-input" placeholder="Masukkan harga..." value="${o.price || ''}">
-                            <button class="btn-save" onclick="savePrice('${o.id}')">Simpan</button>
+                            <div style="flex: 1;">
+                                <label style="display:block; font-size:12px; margin-bottom:4px; color:#888;">Harga (Rp)</label>
+                                <div style="display:flex; align-items:center;">
+                                    <span class="price-prefix">Rp</span>
+                                    <input type="number" class="price-input" id="price-input" placeholder="0" value="${o.price || ''}">
+                                </div>
+                            </div>
+                            <div style="flex: 1;">
+                                <label style="display:block; font-size:12px; margin-bottom:4px; color:#888;">Estimasi (Jam)</label>
+                                <input type="number" class="price-input" id="estimation-input" placeholder="Contoh: 24" value="${o.estimated_duration || ''}">
+                            </div>
+                            <button class="btn-save" onclick="saveOrderDetails('${o.id}')" style="align-self: flex-end; height: 42px;">Simpan</button>
                         </div>
-                        ${o.price ? `
-                        <div class="current-price">
-                            <span class="current-price-label">Harga Saat Ini</span>
-                            <span class="current-price-value">Rp ${Number(o.price).toLocaleString('id-ID')}</span>
+                        ${o.price || o.estimated_duration ? `
+                        <div class="current-price" style="display: flex; gap: 20px;">
+                            ${o.price ? `<div><span class="current-price-label">Harga</span><span class="current-price-value">Rp ${Number(o.price).toLocaleString('id-ID')}</span></div>` : ''}
+                            ${o.estimated_duration ? `<div><span class="current-price-label">Estimasi</span><span class="current-price-value">${o.estimated_duration} Jam</span></div>` : ''}
                         </div>
                         ` : ''}
                     </div>
@@ -823,20 +832,26 @@
             document.querySelector('.status-badge').textContent = statusLabel(status);
         }
 
-        async function savePrice(id) {
+        async function saveOrderDetails(id) {
             const priceInput = document.getElementById('price-input');
+            const estimationInput = document.getElementById('estimation-input');
             const price = priceInput.value ? parseInt(priceInput.value) : null;
+            const duration = estimationInput.value ? parseInt(estimationInput.value) : null;
 
-            const { error } = await db.from('orders').update({ price }).eq('id', id);
+            const { error } = await db.from('orders').update({
+                price: price,
+                estimated_duration: duration
+            }).eq('id', id);
 
-            if (!error) {
-                showToast('Harga berhasil disimpan!', 'success');
-                setTimeout(() => location.reload(), 1000);
+            if (error) {
+                alert('Gagal menyimpan: ' + error.message);
             } else {
-                showToast('Gagal menyimpan harga', 'error');
+                alert('Berhasil disimpan!');
+                // Reload data without refresh
+                const { data } = await db.from('orders').select('*').eq('id', id).single();
+                render(data);
             }
         }
-
         let pendingCompleteId = null;
 
         async function markComplete(id) {
