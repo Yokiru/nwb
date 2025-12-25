@@ -498,9 +498,10 @@ img {
 
 .service-preview img {
     width: 100%;
-    height: 200px;
+    height: 100%;
+    aspect-ratio: 16/9;
     object-fit: cover;
-    filter: brightness(0.9);
+    object-position: center;
     transition: all var(--transition-normal);
 }
 
