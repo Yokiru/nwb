@@ -340,7 +340,7 @@ img {
 }
 
 .hero-description {
-    font-size: 1.125rem;
+    font-size: 0.8rem;
     color: var(--color-text-secondary);
     line-height: 1.7;
     margin-bottom: var(--spacing-2xl);
@@ -1096,7 +1096,7 @@ img {
 
 @media (max-width: 768px) {
     :root {
-        --container-padding: 20px;
+        --container-padding: 15px;
     }
 
     .nav-menu {
