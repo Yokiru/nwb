@@ -17,7 +17,9 @@
     <div id="login-screen" class="login-screen">
         <div class="login-container">
             <div class="login-header">
-                <span class="logo-icon">✦</span>
+                <img id="login-logo" src="" alt="Logo"
+                    style="width: 60px; height: 60px; border-radius: 12px; object-fit: contain; display: none;">
+                <span id="login-logo-fallback" class="logo-icon">✦</span>
                 <h1>NWB.CREATIVE</h1>
                 <p>Admin Dashboard</p>
             </div>
@@ -276,6 +278,7 @@
             function init() {
                 if (window.supabase) {
                     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                    loadLoginLogo();
                 }
 
                 // Check session
@@ -696,6 +699,20 @@
                 fileInput.value = '';
                 setTimeout(function () { statusContainer.innerHTML = ''; }, 2000);
             };
+
+            // Load login logo from database
+            async function loadLoginLogo() {
+                try {
+                    const { data } = await supabaseClient.from('site_settings').select('value').eq('key', 'logo_url').single();
+                    if (data && data.value) {
+                        const logoImg = document.getElementById('login-logo');
+                        const fallback = document.getElementById('login-logo-fallback');
+                        logoImg.src = data.value;
+                        logoImg.style.display = 'block';
+                        fallback.style.display = 'none';
+                    }
+                } catch (e) { }
+            }
 
             // Run on load
             if (document.readyState === 'loading') {
