@@ -39,7 +39,9 @@
         <!-- Sidebar -->
         <aside class="admin-sidebar">
             <div class="sidebar-header">
-                <span class="logo-icon">✦</span>
+                <img id="sidebar-logo" src="" alt="Logo"
+                    style="width: 28px; height: 28px; border-radius: 6px; object-fit: contain; display: none;">
+                <span id="sidebar-logo-fallback" class="logo-icon">✦</span>
                 <span class="logo-text">NWB.CREATIVE</span>
             </div>
             <nav class="sidebar-nav">
@@ -705,11 +707,23 @@
                 try {
                     const { data } = await supabaseClient.from('site_settings').select('value').eq('key', 'logo_url').single();
                     if (data && data.value) {
+                        // Login page logo
                         const logoImg = document.getElementById('login-logo');
                         const fallback = document.getElementById('login-logo-fallback');
-                        logoImg.src = data.value;
-                        logoImg.style.display = 'block';
-                        fallback.style.display = 'none';
+                        if (logoImg) {
+                            logoImg.src = data.value;
+                            logoImg.style.display = 'block';
+                        }
+                        if (fallback) fallback.style.display = 'none';
+
+                        // Sidebar logo
+                        const sidebarLogo = document.getElementById('sidebar-logo');
+                        const sidebarFallback = document.getElementById('sidebar-logo-fallback');
+                        if (sidebarLogo) {
+                            sidebarLogo.src = data.value;
+                            sidebarLogo.style.display = 'block';
+                        }
+                        if (sidebarFallback) sidebarFallback.style.display = 'none';
                     }
                 } catch (e) { }
             }
