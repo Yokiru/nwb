@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portable Editor Test</title>
+    <style>
+        /* Simple test page styling - NOT the editor */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 16px;
+            margin: 30px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        .slider-demo {
+            display: flex;
+            gap: 20px;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        .slider-item {
+            flex-shrink: 0;
+            width: 200px;
+            height: 280px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Portable Editor Test</h1>
+        <p>
+            This is a test page to verify that the NWB Visual Editor works
+            as a standalone, portable bundle. Just one script tag - no other
+            dependencies needed!
+        </p>
+
+        <div class="card">
+            <h2>Test Card</h2>
+            <p>Click this card to edit its styles using the visual editor.</p>
+            <a href="#" class="btn">Sample Button</a>
+        </div>
+
+        <div class="slider-demo hero-visual">
+            <div class="slider-item"></div>
+            <div class="slider-item"></div>
+            <div class="slider-item"></div>
+            <div class="slider-item"></div>
+        </div>
+
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop" alt="Test image">
+    </div>
+
+    <!-- 
+        ========================================
+        PORTABLE EDITOR - JUST THIS ONE LINE!
+        ========================================
+    -->
+    <script src="nwb-visual-editor.js"></script>
+</body>
+
+</html>

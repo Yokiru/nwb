@@ -1,0 +1,567 @@
+/* ================================
+   NWB Visual Editor - Floating Panel
+   ================================ */
+
+/* Editor Toggle Button */
+.nwb-editor-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99999;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.nwb-editor-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(99, 102, 241, 0.6);
+}
+
+.nwb-editor-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.nwb-editor-toggle.active {
+    background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+/* Editor Panel */
+.nwb-editor-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99998;
+    width: 320px;
+    max-height: calc(100vh - 100px);
+    background: #1a1a1f;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+}
+
+.nwb-editor-panel.visible {
+    display: flex;
+}
+
+/* Panel Header */
+.nwb-editor-header {
+    padding: 16px;
+    background: #151519;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: grab;
+    user-select: none;
+}
+
+.nwb-editor-header:active {
+    cursor: grabbing;
+}
+
+.nwb-editor-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nwb-editor-drag-icon {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+    flex-shrink: 0;
+}
+
+.nwb-editor-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nwb-editor-header h3::before {
+    content: '✦';
+    color: #8b5cf6;
+}
+
+.nwb-editor-header .nwb-editor-mode {
+    font-size: 11px;
+    padding: 4px 8px;
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+    border-radius: 4px;
+}
+
+.nwb-editor-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nwb-editor-type-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 6px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Auto-save Toggle Switch */
+.nwb-editor-autosave-toggle {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+}
+
+.nwb-editor-autosave-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.nwb-editor-autosave-toggle .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #374151;
+    transition: 0.3s;
+    border-radius: 20px;
+}
+
+.nwb-editor-autosave-toggle .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.nwb-editor-autosave-toggle input:checked+.slider {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.nwb-editor-autosave-toggle input:checked+.slider:before {
+    transform: translateX(16px);
+}
+
+/* Dragging state */
+.nwb-editor-panel.dragging {
+    opacity: 0.9;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    transition: none;
+}
+
+/* Panel Body - Scrollable */
+.nwb-editor-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+/* Section Groups */
+.nwb-editor-section {
+    margin-bottom: 20px;
+}
+
+.nwb-editor-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nwb-editor-section-title::before {
+    content: '';
+    width: 12px;
+    height: 2px;
+    background: #6366f1;
+    border-radius: 1px;
+}
+
+/* Control Row */
+.nwb-editor-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.nwb-editor-row.full {
+    grid-template-columns: 1fr;
+}
+
+/* Input Group */
+.nwb-editor-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nwb-editor-input-group label {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.nwb-editor-input-group input[type="text"],
+.nwb-editor-input-group input[type="number"],
+.nwb-editor-input-group select {
+    width: 100%;
+    padding: 8px 10px;
+    background: #0d0d10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 12px;
+    font-family: 'Inter', monospace;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.nwb-editor-input-group input:focus,
+.nwb-editor-input-group select:focus {
+    border-color: #6366f1;
+}
+
+/* Color Input */
+.nwb-editor-color-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nwb-editor-color-input input[type="color"] {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.nwb-editor-color-input input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.nwb-editor-color-input input[type="color"]::-webkit-color-swatch {
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.nwb-editor-color-input input[type="text"] {
+    flex: 1;
+}
+
+/* Spacing Controls (4-way) */
+.nwb-editor-spacing {
+    display: grid;
+    grid-template-areas:
+        ". top ."
+        "left center right"
+        ". bottom .";
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+}
+
+.nwb-editor-spacing input {
+    width: 100%;
+    padding: 6px;
+    background: #0d0d10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 11px;
+    text-align: center;
+}
+
+.nwb-editor-spacing .top {
+    grid-area: top;
+}
+
+.nwb-editor-spacing .right {
+    grid-area: right;
+}
+
+.nwb-editor-spacing .bottom {
+    grid-area: bottom;
+}
+
+.nwb-editor-spacing .left {
+    grid-area: left;
+}
+
+.nwb-editor-spacing .center {
+    grid-area: center;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #6366f1;
+}
+
+/* Border Controls */
+.nwb-editor-border-style {
+    display: flex;
+    gap: 4px;
+}
+
+.nwb-editor-border-btn {
+    flex: 1;
+    padding: 8px;
+    background: #0d0d10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #9ca3af;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nwb-editor-border-btn:hover,
+.nwb-editor-border-btn.active {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: #6366f1;
+    color: #fff;
+}
+
+/* Fade Presets */
+.nwb-editor-fade-presets {
+    display: flex;
+    gap: 4px;
+}
+
+.nwb-editor-preset-btn {
+    flex: 1;
+    padding: 8px 6px;
+    background: #0d0d10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #9ca3af;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nwb-editor-preset-btn:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.5);
+    color: #c4b5fd;
+}
+
+.nwb-editor-preset-btn.active {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-color: transparent;
+    color: #fff;
+}
+
+/* Range Slider */
+.nwb-editor-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #0d0d10;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 6px 0;
+}
+
+.nwb-editor-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.4);
+}
+
+.nwb-editor-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    cursor: pointer;
+    border: none;
+}
+
+.nwb-editor-input-group span {
+    font-size: 11px;
+    color: #8b5cf6;
+    font-weight: 500;
+}
+
+/* Selected Element Info */
+.nwb-editor-element-info {
+    padding: 12px;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.nwb-editor-element-info code {
+    font-family: 'SF Mono', monospace;
+    font-size: 12px;
+    color: #a78bfa;
+    word-break: break-all;
+}
+
+/* No Selection State */
+.nwb-editor-no-selection {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280;
+}
+
+.nwb-editor-no-selection svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.5;
+    margin-bottom: 12px;
+}
+
+.nwb-editor-no-selection p {
+    font-size: 13px;
+    margin: 0;
+}
+
+/* Actions Footer */
+.nwb-editor-footer {
+    padding: 12px 16px;
+    background: #151519;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 8px;
+}
+
+.nwb-editor-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nwb-editor-btn.primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+}
+
+.nwb-editor-btn.primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.nwb-editor-btn.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: #9ca3af;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nwb-editor-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Element Highlight Overlay */
+.nwb-editor-highlight {
+    position: absolute;
+    pointer-events: none;
+    border: 2px solid #6366f1;
+    background: rgba(99, 102, 241, 0.1);
+    z-index: 99990;
+    transition: all 0.15s ease;
+}
+
+.nwb-editor-highlight::before {
+    content: attr(data-tag);
+    position: absolute;
+    top: -22px;
+    left: -2px;
+    background: #6366f1;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px 4px 0 0;
+    font-family: 'SF Mono', monospace;
+}
+
+/* Hover Highlight (different from selected) */
+.nwb-editor-hover-highlight {
+    position: absolute;
+    pointer-events: none;
+    border: 1px dashed #22c55e;
+    background: rgba(34, 197, 94, 0.05);
+    z-index: 99989;
+    transition: all 0.1s ease;
+}
+
+/* Editor Mode Body Style */
+body.nwb-editor-mode * {
+    cursor: crosshair !important;
+}
+
+body.nwb-editor-mode .nwb-editor-panel,
+body.nwb-editor-mode .nwb-editor-toggle,
+body.nwb-editor-mode .nwb-editor-panel * {
+    cursor: default !important;
+}
+
+/* Scrollbar Styling for Panel */
+.nwb-editor-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.nwb-editor-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.nwb-editor-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.nwb-editor-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

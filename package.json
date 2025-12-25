@@ -1,0 +1,23 @@
+{
+  "name": "nwb-creative-portfolio",
+  "version": "1.0.0",
+  "description": "NWB Creative Portfolio Website",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "editor": "node server.js",
+    "start": "concurrently \"npm run dev\" \"npm run editor\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "concurrently": "^8.2.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}

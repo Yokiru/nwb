@@ -1,0 +1,122 @@
+/* ================================
+   Hero Section Visual (Infinite Slider)
+   ================================ */
+
+/* Vertical Layout for Hero - Slider Below Content */
+.hero-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--spacing-3xl) var(--container-padding);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-3xl);
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+/* Slider Below Hero Content - Container Width with Padding */
+.hero-visual {
+    position: relative;
+    width: 100%;
+    max-width: calc(100vw - var(--container-padding) * 2);
+    margin: 0 auto;
+    height: auto;
+    padding: var(--spacing-xl) 0;
+    /* Mask: Gradient Fade on all edges */
+    mask-image:
+        linear-gradient(to right, transparent, black 5%, black 95%, transparent),
+        linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image:
+        linear-gradient(to right, transparent, black 5%, black 95%, transparent),
+        linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+}
+
+.infinite-loop {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.loop-track {
+    display: flex;
+    gap: var(--spacing-lg);
+    width: max-content;
+    animation: scroll-loop 25s linear infinite;
+}
+
+.loop-item {
+    width: 280px;
+    height: 380px;
+    flex-shrink: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.loop-item:has(img[src]:not([src=""])) {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.loop-item:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+.loop-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+    transition: filter 0.3s ease;
+}
+
+.loop-item:hover img {
+    filter: brightness(1);
+}
+
+@keyframes scroll-loop {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        /* Move by (item width + gap) * number of original items */
+        transform: translateX(calc(-280px * 4 - var(--spacing-lg) * 4));
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-container {
+        padding-top: 120px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .loop-item {
+        width: 200px;
+        height: 280px;
+    }
+
+    @keyframes scroll-loop {
+        100% {
+            transform: translateX(calc(-200px * 4 - var(--spacing-lg) * 4));
+        }
+    }
+}

@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Detail - NWB.CREATIVE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0b;
+            color: #e5e5e5;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Layout */
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #888;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .order-id {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .order-meta {
+            color: #666;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .status-in_progress {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .status-revision {
+            background: rgba(236, 72, 153, 0.15);
+            color: #ec4899;
+        }
+
+        .status-completed {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .status-cancelled {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #1a1a1c;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-item.full {
+            grid-column: 1 / -1;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .info-value {
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .info-value a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        /* Text Block */
+        .text-block {
+            background: #111113;
+            border: 1px solid #1a1a1c;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #aaa;
+            white-space: pre-wrap;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 12px;
+            padding-top: 24px;
+            border-top: 1px solid #1a1a1c;
+        }
+
+        .btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            background: #1a1a1c;
+            color: #e5e5e5;
+            border: 1px solid #2a2a2e;
+        }
+
+        .btn-secondary:hover {
+            background: #222;
+        }
+
+        .btn-success {
+            background: #22c55e;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        .btn-success:disabled {
+            background: #1a1a1c;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        /* Status Dropdown */
+        .status-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-select {
+            padding: 8px 12px;
+            background: #111;
+            border: 1px solid #2a2a2e;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Price Input */
+        .price-section {
+            background: #111113;
+            border: 1px solid #1a1a1c;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .price-prefix {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .price-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: 1px solid #2a2a2e;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .price-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .btn-save {
+            padding: 12px 24px;
+            background: transparent;
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-save:hover {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .current-price {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #1a1a1c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .current-price-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .current-price-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: #22c55e;
+            color: #fff;
+        }
+
+        .toast.error {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .toast.warning {
+            background: #f59e0b;
+            color: #000;
+        }
+
+        /* Confirm Modal */
+        .confirm-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+        }
+
+        .confirm-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .confirm-box {
+            background: #111113;
+            border: 1px solid #2a2a2e;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 360px;
+            text-align: center;
+        }
+
+        .confirm-box h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .confirm-box p {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .confirm-actions button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .confirm-cancel {
+            background: #1a1a1c;
+            border: 1px solid #2a2a2e;
+            color: #e5e5e5;
+        }
+
+        .confirm-ok {
+            background: #22c55e;
+            border: none;
+            color: #fff;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 80px 24px;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .order-header {
+                flex-direction: column;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Page Tabs */
+        .page-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #1a1a1c;
+            padding-bottom: 12px;
+        }
+
+        .page-tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid #2a2a2e;
+            border-radius: 8px;
+            color: #888;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .page-tab.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #fff;
+        }
+
+        .page-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Media Section */
+        .media-upload-area {
+            background: #111113;
+            border: 2px dashed #2a2a2e;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            margin: 0 auto 24px auto;
+            cursor: pointer;
+            transition: all 0.2s;
+            max-width: 500px;
+        }
+
+        .media-upload-area:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .media-upload-area input {
+            display: none;
+        }
+
+        .media-upload-area span {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            justify-items: center;
+        }
+
+        .media-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .media-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-item .delete-btn {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
+            background: rgba(239, 68, 68, 0.9);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .media-item:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .media-empty {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-size: 14px;
+            grid-column: 1 / -1;
+            width: 100%;
+        }
+
+        .upload-status {
+            margin-bottom: 16px;
+        }
+
+        .upload-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .upload-item .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="header">
+            <a href="admin.html" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Dashboard
+            </a>
+        </div>
+
+        <div id="content">
+            <div class="loading">Memuat...</div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="confirm-modal" class="confirm-modal">
+        <div class="confirm-box">
+            <h3>Tandai Selesai?</h3>
+            <p>Order akan ditandai sebagai selesai dan tidak bisa diubah lagi.</p>
+            <div class="confirm-actions">
+                <button class="confirm-cancel" onclick="hideConfirm()">Batal</button>
+                <button class="confirm-ok" id="confirm-ok-btn">Ya, Selesai</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://agefrdpkkrmddzjlyszn.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_rRVtXYoMFaxI3A_jFE_6yg_SYgbonpP';
+        let db = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (!id) {
+                document.getElementById('content').innerHTML = '<div class="loading">Order tidak ditemukan</div>';
+                return;
+            }
+
+            const { data, error } = await db.from('orders').select('*').eq('id', id).single();
+
+            if (error || !data) {
+                document.getElementById('content').innerHTML = '<div class="loading">Order tidak ditemukan</div>';
+                return;
+            }
+
+            render(data);
+        });
+
+        function render(o) {
+            const date = new Date(o.created_at).toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            });
+
+            document.getElementById('content').innerHTML = `
+                <div class="order-header">
+                    <div>
+                        <div class="order-id">${o.order_number}</div>
+                        <div class="order-meta">Dibuat ${date}</div>
+                    </div>
+                    <span class="status-badge status-${o.status}">${statusLabel(o.status)}</span>
+                </div>
+
+                <!-- Page Tabs -->
+                <div class="page-tabs" style="margin-top: 24px;">
+                    <button class="page-tab active" onclick="switchOrderTab('detail')">Detail</button>
+                    <button class="page-tab" onclick="switchOrderTab('media')">Media</button>
+                </div>
+
+                <!-- Detail Tab -->
+                <div id="tab-detail" class="tab-content active">
+
+                <div class="section" style="margin-top: 16px;">
+                    <div class="section-title">Kontak</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Nama</span>
+                            <span class="info-value">${o.name}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">WhatsApp</span>
+                            <span class="info-value"><a href="https://wa.me/${o.whatsapp}">${o.whatsapp}</a></span>
+                        </div>
+                        <div class="info-item full">
+                            <span class="info-label">Email</span>
+                            <span class="info-value">${o.email || '-'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Detail Poster</div>
+                    <div class="info-grid">
+                        <div class="info-item full">
+                            <span class="info-label">Judul</span>
+                            <span class="info-value">${o.judul || '-'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Ukuran</span>
+                            <span class="info-value">${o.ukuran || '-'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Warna</span>
+                            <span class="info-value">${o.warna || '-'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Logo</span>
+                            <span class="info-value">${o.logo || '-'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                ${o.konsep ? `
+                <div class="section">
+                    <div class="section-title">Konsep / Deskripsi</div>
+                    <div class="text-block">${o.konsep}</div>
+                </div>
+                ` : ''}
+
+                ${o.teks_tambahan ? `
+                <div class="section">
+                    <div class="section-title">Teks Tambahan</div>
+                    <div class="text-block">${o.teks_tambahan}</div>
+                </div>
+                ` : ''}
+
+                ${o.info_lainnya ? `
+                <div class="section">
+                    <div class="section-title">Info Lainnya</div>
+                    <div class="text-block">${o.info_lainnya}</div>
+                </div>
+                ` : ''}
+
+                <div class="section">
+                    <div class="section-title">Ubah Status</div>
+                    <div class="status-control">
+                        <select class="status-select" onchange="updateStatus('${o.id}', this.value)">
+                            <option value="pending" ${o.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="in_progress" ${o.status === 'in_progress' ? 'selected' : ''}>Dikerjakan</option>
+                            <option value="revision" ${o.status === 'revision' ? 'selected' : ''}>Revisi</option>
+                            <option value="completed" ${o.status === 'completed' ? 'selected' : ''}>Selesai</option>
+                            <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>Dibatalkan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Harga</div>
+                    <div class="price-section">
+                        <div class="price-row">
+                            <span class="price-prefix">Rp</span>
+                            <input type="number" class="price-input" id="price-input" placeholder="Masukkan harga..." value="${o.price || ''}">
+                            <button class="btn-save" onclick="savePrice('${o.id}')">Simpan</button>
+                        </div>
+                        ${o.price ? `
+                        <div class="current-price">
+                            <span class="current-price-label">Harga Saat Ini</span>
+                            <span class="current-price-value">Rp ${Number(o.price).toLocaleString('id-ID')}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <a href="https://wa.me/${o.whatsapp}" target="_blank" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        WhatsApp
+                    </a>
+                    <button onclick="markComplete('${o.id}')" class="btn btn-success" ${o.status === 'completed' ? 'disabled' : ''}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                        ${o.status === 'completed' ? 'Sudah Selesai' : 'Tandai Selesai'}
+                    </button>
+                </div>
+                </div><!-- /tab-detail -->
+
+                <!-- Media Tab -->
+                <!-- Media Tab -->
+                <div id="tab-media" class="tab-content" style="text-align: center;">
+                    <label class="media-upload-area" style="display: inline-block; width: 100%; max-width: 500px;">
+                        <input type="file" accept="image/*" multiple onchange="uploadOrderMedia('${o.id}', this.files)">
+                        <span>📁 Klik untuk upload gambar referensi</span>
+                    </label>
+                    <div id="media-upload-status" class="upload-status"></div>
+                    <div id="media-grid" class="media-grid" style="text-align: left;"></div>
+                </div>
+            `;
+            // Load media
+            loadOrderMedia(o.id);
+        }
+
+        function statusLabel(s) {
+            return { pending: 'Pending', in_progress: 'Dikerjakan', revision: 'Revisi', completed: 'Selesai', cancelled: 'Dibatalkan' }[s] || s;
+        }
+
+        async function updateStatus(id, status) {
+            await db.from('orders').update({ status }).eq('id', id);
+            document.querySelector('.status-badge').className = `status-badge status-${status}`;
+            document.querySelector('.status-badge').textContent = statusLabel(status);
+        }
+
+        async function savePrice(id) {
+            const priceInput = document.getElementById('price-input');
+            const price = priceInput.value ? parseInt(priceInput.value) : null;
+
+            const { error } = await db.from('orders').update({ price }).eq('id', id);
+
+            if (!error) {
+                showToast('Harga berhasil disimpan!', 'success');
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                showToast('Gagal menyimpan harga', 'error');
+            }
+        }
+
+        let pendingCompleteId = null;
+
+        async function markComplete(id) {
+            // Check if price exists
+            const priceInput = document.getElementById('price-input');
+            const price = priceInput.value ? parseInt(priceInput.value) : null;
+
+            if (!price) {
+                showToast('⚠️ Harga wajib diisi sebelum menandai selesai!', 'warning');
+                priceInput.focus();
+                priceInput.style.borderColor = '#f59e0b';
+                return;
+            }
+
+            pendingCompleteId = id;
+            showConfirm();
+        }
+
+        async function confirmComplete() {
+            if (!pendingCompleteId) return;
+
+            hideConfirm();
+            await db.from('orders').update({ status: 'completed' }).eq('id', pendingCompleteId);
+            showToast('✓ Order berhasil ditandai selesai!', 'success');
+            setTimeout(() => location.reload(), 1000);
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function showConfirm() {
+            document.getElementById('confirm-modal').classList.add('show');
+            document.getElementById('confirm-ok-btn').onclick = confirmComplete;
+        }
+
+        function hideConfirm() {
+            document.getElementById('confirm-modal').classList.remove('show');
+            pendingCompleteId = null;
+        }
+
+        // Tab switching
+        function switchOrderTab(tab) {
+            document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
+        }
+
+        // Load order media
+        async function loadOrderMedia(orderId) {
+            const grid = document.getElementById('media-grid');
+            const { data, error } = await db.from('order_media').select('*').eq('order_id', orderId).order('created_at', { ascending: false });
+
+            if (!data || data.length === 0) {
+                grid.innerHTML = '<div class="media-empty">Belum ada media. Upload gambar referensi!</div>';
+                return;
+            }
+
+            grid.innerHTML = data.map(m => `
+                <div class="media-item">
+                    <img src="${m.image_url}" alt="Media" onclick="window.open('${m.image_url}', '_blank')">
+                    <button class="delete-btn" onclick="deleteMedia(${m.id}, ${orderId})">×</button>
+                </div>
+            `).join('');
+        }
+
+        // Upload order media
+        async function uploadOrderMedia(orderId, files) {
+            if (!files.length) return;
+
+            const statusContainer = document.getElementById('media-upload-status');
+            let html = '';
+
+            for (let i = 0; i < files.length; i++) {
+                html += `<div class="upload-item" id="media-upload-${i}">
+                    <div class="spinner"></div>
+                    <span>${files[i].name}</span>
+                </div>`;
+            }
+            statusContainer.innerHTML = html;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileName = `order-${orderId}-${Date.now()}-${i}.${file.name.split('.').pop()}`;
+                const itemEl = document.getElementById('media-upload-' + i);
+
+                const { data, error } = await db.storage.from('images').upload(fileName, file);
+
+                if (!error) {
+                    const { data: urlData } = db.storage.from('images').getPublicUrl(fileName);
+                    await db.from('order_media').insert({ order_id: orderId, image_url: urlData.publicUrl });
+                    itemEl.innerHTML = '<span style="color:#22c55e;">✓</span> ' + file.name + ' - Selesai';
+                } else {
+                    itemEl.innerHTML = '<span style="color:#ef4444;">✗</span> ' + file.name + ' - Gagal';
+                }
+            }
+
+            showToast('Upload selesai!', 'success');
+            loadOrderMedia(orderId);
+            setTimeout(() => { statusContainer.innerHTML = ''; }, 2000);
+        }
+
+        // Delete media
+        async function deleteMedia(mediaId, orderId) {
+            if (!confirm('Hapus gambar ini?')) return;
+            await db.from('order_media').delete().eq('id', mediaId);
+            loadOrderMedia(orderId);
+            showToast('Media dihapus', 'success');
+        }
+    </script>
+</body>
+
+</html>

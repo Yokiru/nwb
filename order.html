@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Poster - NWB.CREATIVE</title>
+    <meta name="description" content="Order poster design dari NWB.CREATIVE - Esports, Gaming, dan Sports Poster">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/hero-slider.css">
+    <link rel="stylesheet" href="css/order.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">✦</span>
+                <span class="logo-text">NWB.CREATIVE</span>
+            </a>
+
+            <ul class="nav-menu">
+                <li><a href="index.html#work" class="nav-link">Work</a></li>
+                <li><a href="index.html#services" class="nav-link">Services</a></li>
+                <li><a href="order.html" class="nav-link active">Order</a></li>
+                <li><a href="track.html" class="nav-link">Track Order</a></li>
+            </ul>
+
+            <a href="order.html" class="nav-cta">Get Started</a>
+
+            <button class="mobile-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Order Form Section -->
+    <section class="order-section">
+        <div class="order-container">
+            <!-- Header -->
+            <div class="order-header">
+                <span class="section-badge">📝 ORDER POSTER</span>
+                <h1 class="order-title">Format Order Poster</h1>
+                <p class="order-description">
+                    Isi form di bawah untuk memesan desain poster. Kami akan menghubungi Anda
+                    untuk konsultasi gratis setelah form diterima.
+                </p>
+            </div>
+
+            <!-- Order Form -->
+            <form class="order-form">
+                <!-- Contact Info Section -->
+                <div class="form-section">
+                    <h2 class="form-section-title">Informasi Kontak</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="Nama Anda" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp">Nomor WhatsApp <span class="required">*</span></label>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="08xxxxxxxxxx" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email (Opsional)</label>
+                        <input type="email" id="email" name="email" placeholder="email@example.com">
+                    </div>
+                </div>
+
+                <!-- Poster Details Section -->
+                <div class="form-section">
+                    <h2 class="form-section-title">Detail Poster</h2>
+
+                    <div class="form-group">
+                        <label for="judul">Judul <span class="required">*</span></label>
+                        <input type="text" id="judul" name="judul" placeholder="Judul utama pada poster" required>
+                        <span class="form-hint">Contoh: "FINAL MATCH", "TEAM ROSTER 2024"</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="konsep">Konsep <span class="required">*</span></label>
+                        <textarea id="konsep" name="konsep" rows="4"
+                            placeholder="Gambaran konsep atau tema yang diinginkan" required></textarea>
+                        <span class="form-hint">Jelaskan gaya, mood, atau referensi desain yang diinginkan</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teks-tambahan">Teks Tambahan</label>
+                        <textarea id="teks-tambahan" name="teks-tambahan" rows="3"
+                            placeholder="Kalimat atau informasi tambahan yang ingin ditampilkan"></textarea>
+                        <span class="form-hint">Tagline, sponsor, tanggal event, dll.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="logo">Logo</label>
+                        <textarea id="logo" name="logo" rows="2"
+                            placeholder="Kirimkan logo jika ada, atau tuliskan jika tidak diperlukan"></textarea>
+                        <span class="form-hint">Bisa kirim via WhatsApp nanti atau tulis "tidak ada"</span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="warna">Dominan Warna</label>
+                            <input type="text" id="warna" name="warna" placeholder="Warna utama yang diinginkan">
+                            <span class="form-hint">Contoh: Merah-Hitam, Biru Neon</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ukuran">Ukuran Poster</label>
+                            <select id="ukuran" name="ukuran">
+                                <option value="">Pilih ukuran</option>
+                                <option value="instagram-square">Instagram Square (1:1)</option>
+                                <option value="instagram-story">Instagram Story (9:16)</option>
+                                <option value="poster-a3">Poster A3</option>
+                                <option value="poster-a4">Poster A4</option>
+                                <option value="custom">Custom (jelaskan di info lainnya)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="info-lainnya">Informasi Lainnya</label>
+                        <textarea id="info-lainnya" name="info-lainnya" rows="4"
+                            placeholder="Detail tambahan seperti target audiens, deadline, referensi gambar, dll."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Logo & Referensi (Opsional)</label>
+                        <div class="file-upload-area" onclick="document.getElementById('media-files').click()">
+                            <input type="file" id="media-files" accept="image/*" multiple style="display:none">
+                            <span class="upload-icon">📁</span>
+                            <span class="upload-text">Klik untuk upload gambar<br><small>Logo, referensi, foto player,
+                                    dll.</small></span>
+                        </div>
+                        <div id="file-preview" class="file-preview"></div>
+                        <span class="form-hint">Max 5 file. Format: JPG, PNG, WebP</span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                        </svg>
+                        Kirim Order
+                    </button>
+                    <p class="form-note">Kami akan menghubungi Anda via WhatsApp dalam 1x24 jam</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Footer Navigation -->
+            <nav class="footer-nav" data-animate="fade-up">
+                <a href="index.html" class="footer-link">Home</a>
+                <span class="footer-divider">·</span>
+                <a href="index.html#services" class="footer-link">Services</a>
+                <span class="footer-divider">·</span>
+                <a href="index.html#process" class="footer-link">Process</a>
+                <span class="footer-divider">·</span>
+                <a href="order.html" class="footer-link">Order</a>
+                <span class="footer-divider">·</span>
+                <a href="#contact" class="footer-link">Contact</a>
+            </nav>
+
+            <!-- Large Brand Name -->
+            <div class="footer-brand" data-animate="blur-in">
+                <span class="footer-brand-text">NWB.CREATIVE</span>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom" data-animate="fade-up">
+                <p class="footer-copyright">© 2025 All rights reserved. Made with ❤️</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <rect x="2" y="2" width="20" height="20" rx="5" />
+                            <circle cx="12" cy="12" r="4" />
+                            <circle cx="18" cy="6" r="1.5" fill="currentColor" />
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Discord">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                            <path
+                                d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const orderForm = document.querySelector('.order-form');
+            const NWB_WHATSAPP = '6282343038794';
+
+            // Supabase Config
+            const SUPABASE_URL = 'https://agefrdpkkrmddzjlyszn.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable_rRVtXYoMFaxI3A_jFE_6yg_SYgbonpP';
+            let supabaseClient = null;
+
+            // Initialize Supabase
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            }
+
+            // Generate order number - simple 4 digits
+            function generateOrderNumber() {
+                const num = Math.floor(1000 + Math.random() * 9000);
+                return 'NWB-' + num;
+            }
+
+            // Save order to database
+            async function saveOrderToDatabase(orderNumber, orderData) {
+                if (!supabaseClient) {
+                    console.warn('Supabase not available');
+                    return false;
+                }
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('orders')
+                        .insert([{
+                            order_number: orderNumber,
+                            name: orderData.name,
+                            whatsapp: orderData.whatsapp,
+                            email: orderData.email || null,
+                            judul: orderData.judul,
+                            konsep: orderData.konsep,
+                            teks_tambahan: orderData.teksTambahan || null,
+                            logo: orderData.logo || null,
+                            warna: orderData.warna || null,
+                            ukuran: orderData.ukuran || null,
+                            info_lainnya: orderData.infoLainnya || null,
+                            status: 'pending'
+                        }])
+                        .select()
+                        .single();
+
+                    if (error) {
+                        console.error('Database error:', error);
+                        return null;
+                    }
+                    return data;
+                } catch (err) {
+                    console.error('Save error:', err);
+                    return null;
+                }
+            }
+
+            // File upload preview
+            let selectedFiles = [];
+            const mediaInput = document.getElementById('media-files');
+            const filePreview = document.getElementById('file-preview');
+
+            mediaInput.addEventListener('change', function (e) {
+                const newFiles = Array.from(e.target.files).slice(0, 5 - selectedFiles.length);
+                selectedFiles = [...selectedFiles, ...newFiles].slice(0, 5);
+                renderFilePreview();
+            });
+
+            function renderFilePreview() {
+                filePreview.innerHTML = selectedFiles.map((file, idx) => {
+                    const url = URL.createObjectURL(file);
+                    return `<div class="file-preview-item">
+                        <img src="${url}" alt="${file.name}">
+                        <button type="button" class="remove-btn" onclick="removeFile(${idx})">×</button>
+                    </div>`;
+                }).join('');
+            }
+
+            window.removeFile = function (idx) {
+                selectedFiles.splice(idx, 1);
+                renderFilePreview();
+            };
+
+            orderForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                // Get submit button
+                const submitBtn = orderForm.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+
+                // Show loading
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>⏳ Memproses...</span>';
+
+                // Get form values
+                const orderData = {
+                    name: document.getElementById('name').value,
+                    whatsapp: document.getElementById('whatsapp').value,
+                    email: document.getElementById('email').value || null,
+                    judul: document.getElementById('judul').value,
+                    konsep: document.getElementById('konsep').value,
+                    teksTambahan: document.getElementById('teks-tambahan').value || null,
+                    logo: document.getElementById('logo').value || null,
+                    warna: document.getElementById('warna').value || null,
+                    ukuran: document.getElementById('ukuran').value || null,
+                    infoLainnya: document.getElementById('info-lainnya').value || null
+                };
+
+                // Generate order number
+                const orderNumber = generateOrderNumber();
+
+                // Save to database first
+                const saved = await saveOrderToDatabase(orderNumber, orderData);
+                console.log('Order saved:', saved);
+
+                // Upload media files if any
+                if (saved && saved.id && selectedFiles.length > 0) {
+                    for (let i = 0; i < selectedFiles.length; i++) {
+                        const file = selectedFiles[i];
+                        const fileName = `order-${saved.id}-${Date.now()}-${i}.${file.name.split('.').pop()}`;
+
+                        const { error } = await supabaseClient.storage.from('images').upload(fileName, file);
+                        if (!error) {
+                            const { data: urlData } = supabaseClient.storage.from('images').getPublicUrl(fileName);
+                            await supabaseClient.from('order_media').insert({
+                                order_id: saved.id,
+                                image_url: urlData.publicUrl,
+                                uploaded_by: 'customer'
+                            });
+                        }
+                    }
+                }
+
+                // Build WhatsApp message - clean format without problematic emoji
+                const message = `*ORDER BARU - ${orderNumber}*
+-------------------
+
+*INFORMASI KONTAK*
+Nama: ${orderData.name}
+WhatsApp: ${orderData.whatsapp}
+Email: ${orderData.email || '-'}
+
+*DETAIL POSTER*
+Judul: ${orderData.judul}
+Konsep: ${orderData.konsep}
+Teks Tambahan: ${orderData.teksTambahan || '-'}
+Logo: ${orderData.logo || '-'}
+Warna: ${orderData.warna || '-'}
+Ukuran: ${orderData.ukuran || '-'}
+Info Lainnya: ${orderData.infoLainnya || '-'}
+${selectedFiles.length > 0 ? `\n📎 Media: ${selectedFiles.length} file ter-upload` : ''}
+
+-------------------
+Track: ${window.location.origin}/track.html?order=${orderNumber}`;
+
+                // Open WhatsApp
+                const encodedMessage = encodeURIComponent(message);
+                const waUrl = `https://wa.me/${NWB_WHATSAPP}?text=${encodedMessage}`;
+                window.open(waUrl, '_blank');
+
+                // Show success modal
+                showSuccessModal(orderNumber);
+
+                // Reset form and button
+                orderForm.reset();
+                selectedFiles = [];
+                document.getElementById('file-preview').innerHTML = '';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            });
+
+            function showSuccessModal(orderNumber) {
+                // Create modal with premium design
+                const modal = document.createElement('div');
+                modal.className = 'success-modal';
+                modal.innerHTML = `
+                <div class="success-content">
+                    <div class="success-checkmark">
+                        <svg viewBox="0 0 52 52">
+                            <circle cx="26" cy="26" r="25" fill="none"/>
+                            <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h2>Order Berhasil! 🎉</h2>
+                    <p class="success-subtitle">Pesanan Anda telah kami terima</p>
+                    <div class="order-number-box">
+                        <span class="order-label">Nomor Order</span>
+                        <span class="order-number-value">${orderNumber}</span>
+                    </div>
+                    <p class="order-note">Simpan nomor ini untuk melacak status pesanan</p>
+                    <div class="success-actions">
+                        <button class="btn-copy" onclick="copyOrderNumber('${orderNumber}', this)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            <span>Salin</span>
+                        </button>
+                        <a href="track.html?order=${orderNumber}" class="btn-track">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="M21 21l-4.35-4.35"/>
+                            </svg>
+                            <span>Track Order</span>
+                        </a>
+                    </div>
+                    <button class="btn-close" onclick="this.closest('.success-modal').remove()">Tutup</button>
+                </div>
+            `;
+                document.body.appendChild(modal);
+
+                // Premium styles
+                const style = document.createElement('style');
+                style.textContent = `
+                .success-modal {
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(0, 0, 0, 0.85);
+                    backdrop-filter: blur(8px);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                    padding: 24px;
+                    animation: fadeIn 0.3s ease;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                .success-content {
+                    background: linear-gradient(145deg, #1a1a1f 0%, #0d0d10 100%);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 24px;
+                    padding: 48px 40px;
+                    text-align: center;
+                    max-width: 420px;
+                    width: 100%;
+                    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
+                    animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                @keyframes scaleIn {
+                    from { transform: scale(0.9); opacity: 0; }
+                    to { transform: scale(1); opacity: 1; }
+                }
+                .success-checkmark {
+                    width: 80px;
+                    height: 80px;
+                    margin: 0 auto 24px;
+                }
+                .success-checkmark svg {
+                    width: 100%;
+                    height: 100%;
+                }
+                .success-checkmark circle {
+                    stroke: #22c55e;
+                    stroke-width: 2;
+                    stroke-dasharray: 166;
+                    stroke-dashoffset: 166;
+                    animation: circle 0.6s ease forwards;
+                }
+                .success-checkmark path {
+                    stroke: #22c55e;
+                    stroke-width: 3;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    stroke-dasharray: 48;
+                    stroke-dashoffset: 48;
+                    animation: check 0.3s 0.4s ease forwards;
+                }
+                @keyframes circle {
+                    to { stroke-dashoffset: 0; }
+                }
+                @keyframes check {
+                    to { stroke-dashoffset: 0; }
+                }
+                .success-content h2 {
+                    font-size: 1.75rem;
+                    font-weight: 700;
+                    margin-bottom: 8px;
+                    background: linear-gradient(135deg, #fff 0%, #a0a0a0 100%);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                .success-subtitle {
+                    color: #9ca3af;
+                    font-size: 1rem;
+                    margin-bottom: 32px;
+                }
+                .order-number-box {
+                    background: linear-gradient(135deg, rgba(45, 140, 255, 0.15) 0%, rgba(45, 140, 255, 0.05) 100%);
+                    border: 1px solid rgba(45, 140, 255, 0.3);
+                    border-radius: 16px;
+                    padding: 24px;
+                    margin-bottom: 16px;
+                }
+                .order-label {
+                    display: block;
+                    font-size: 0.75rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.1em;
+                    color: #6b7280;
+                    margin-bottom: 8px;
+                }
+                .order-number-value {
+                    font-size: 2.5rem;
+                    font-weight: 800;
+                    color: #2D8CFF;
+                    letter-spacing: 0.05em;
+                }
+                .order-note {
+                    font-size: 0.875rem;
+                    color: #6b7280;
+                    margin-bottom: 32px;
+                }
+                .success-actions {
+                    display: flex;
+                    gap: 12px;
+                    margin-bottom: 24px;
+                }
+                .btn-copy, .btn-track {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    padding: 14px 20px;
+                    border-radius: 12px;
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    text-decoration: none;
+                }
+                .btn-copy {
+                    background: rgba(255, 255, 255, 0.08);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    color: #fff;
+                }
+                .btn-copy:hover {
+                    background: rgba(255, 255, 255, 0.12);
+                    transform: translateY(-2px);
+                }
+                .btn-copy.copied {
+                    background: rgba(34, 197, 94, 0.2);
+                    border-color: rgba(34, 197, 94, 0.3);
+                    color: #22c55e;
+                }
+                .btn-track {
+                    background: linear-gradient(135deg, #2D8CFF 0%, #1a6fcc 100%);
+                    border: none;
+                    color: #fff;
+                    box-shadow: 0 4px 15px rgba(45, 140, 255, 0.3);
+                }
+                .btn-track:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(45, 140, 255, 0.4);
+                }
+                .btn-close {
+                    background: transparent;
+                    border: none;
+                    color: #6b7280;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    padding: 8px 16px;
+                    transition: color 0.2s;
+                }
+                .btn-close:hover {
+                    color: #fff;
+                }
+            `;
+                document.head.appendChild(style);
+            }
+
+            function copyOrderNumber(orderNumber, btn) {
+                navigator.clipboard.writeText(orderNumber);
+                btn.classList.add('copied');
+                btn.querySelector('span').textContent = 'Tersalin!';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.querySelector('span').textContent = 'Salin';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - NWB.CREATIVE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/hero-slider.css">
+    <link rel="stylesheet" href="css/track.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">✦</span>
+                <span class="logo-text">NWB.CREATIVE</span>
+            </a>
+
+            <ul class="nav-menu">
+                <li><a href="index.html#work" class="nav-link">Work</a></li>
+                <li><a href="index.html#services" class="nav-link">Services</a></li>
+                <li><a href="order.html" class="nav-link">Order</a></li>
+                <li><a href="track.html" class="nav-link active">Track Order</a></li>
+            </ul>
+
+            <a href="order.html" class="nav-cta">Get Started</a>
+
+            <button class="mobile-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Track Order Section -->
+    <section class="track-section">
+        <div class="track-container">
+            <!-- Header -->
+            <div class="track-header" data-animate="fade-up">
+                <span class="section-badge">🔍 TRACK ORDER</span>
+                <h1 class="track-title">Lacak Pesanan Anda</h1>
+                <p class="track-description">
+                    Masukkan nomor order untuk melihat status pesanan Anda.
+                </p>
+            </div>
+
+            <!-- Search Form -->
+            <form id="track-form" class="track-form" data-animate="fade-up" data-delay="200">
+                <div class="search-box">
+                    <input type="text" id="order-number" placeholder="Contoh: NWB-A1B2C3D4" required>
+                    <button type="submit" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                        </svg>
+                        Cari
+                    </button>
+                </div>
+                <p id="search-error" class="search-error"></p>
+            </form>
+
+            <!-- Order Result -->
+            <div id="order-result" class="order-result" style="display: none;">
+                <!-- Result will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <nav class="footer-nav" data-animate="fade-up">
+                <a href="index.html" class="footer-link">Home</a>
+                <span class="footer-divider">·</span>
+                <a href="index.html#services" class="footer-link">Services</a>
+                <span class="footer-divider">·</span>
+                <a href="order.html" class="footer-link">Order</a>
+                <span class="footer-divider">·</span>
+                <a href="track.html" class="footer-link">Track Order</a>
+            </nav>
+
+            <div class="footer-brand" data-animate="blur-in">
+                <span class="footer-brand-text">NWB.CREATIVE</span>
+            </div>
+
+            <div class="footer-bottom" data-animate="fade-up">
+                <p class="footer-copyright">© 2025 All rights reserved. Made with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            // Supabase Config
+            var SUPABASE_URL = 'https://agefrdpkkrmddzjlyszn.supabase.co';
+            var SUPABASE_KEY = 'sb_publishable_rRVtXYoMFaxI3A_jFE_6yg_SYgbonpP';
+            var supabaseClient = null;
+
+            // Initialize
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            }
+
+            // Get order by number
+            async function getOrderByNumber(orderNum) {
+                if (!supabaseClient) return null;
+
+                var result = await supabaseClient
+                    .from('orders')
+                    .select('*')
+                    .eq('order_number', orderNum.toUpperCase())
+                    .single();
+
+                return result.data;
+            }
+
+            var trackForm = document.getElementById('track-form');
+            var orderResult = document.getElementById('order-result');
+            var searchError = document.getElementById('search-error');
+            var orderInput = document.getElementById('order-number');
+
+            // Check URL for order parameter
+            var urlParams = new URLSearchParams(window.location.search);
+            var orderFromUrl = urlParams.get('order');
+            if (orderFromUrl) {
+                orderInput.value = orderFromUrl;
+                // Auto search
+                searchOrder(orderFromUrl);
+            }
+
+            trackForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var orderNumber = orderInput.value.trim().toUpperCase();
+                if (orderNumber) {
+                    searchOrder(orderNumber);
+                }
+            });
+
+            async function searchOrder(orderNumber) {
+                searchError.textContent = '';
+                orderResult.style.display = 'none';
+
+                // Show loading
+                orderResult.innerHTML = '<p class="loading">Mencari order...</p>';
+                orderResult.style.display = 'block';
+
+                try {
+                    var order = await getOrderByNumber(orderNumber);
+
+                    if (!order) {
+                        searchError.textContent = 'Order tidak ditemukan. Pastikan nomor order benar.';
+                        orderResult.style.display = 'none';
+                        return;
+                    }
+
+                    renderOrderResult(order);
+                } catch (error) {
+                    console.error(error);
+                    searchError.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
+                    orderResult.style.display = 'none';
+                }
+            }
+
+            function renderOrderResult(order) {
+                const statusInfo = getStatusInfo(order.status);
+
+                orderResult.innerHTML = `
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="result-order-info">
+                            <span class="result-number">${order.order_number}</span>
+                            <span class="result-date">Order: ${formatDate(order.created_at)}</span>
+                        </div>
+                        <span class="result-status status-${order.status}">${statusInfo.label}</span>
+                    </div>
+                    
+                    <div class="status-timeline">
+                        <div class="timeline-step ${order.status !== 'cancelled' ? 'completed' : 'cancelled'}">
+                            <div class="step-icon">✓</div>
+                            <div class="step-info">
+                                <span class="step-title">Order Diterima</span>
+                                <span class="step-desc">Pesanan Anda telah kami terima</span>
+                            </div>
+                        </div>
+                        <div class="timeline-step ${['in_progress', 'revision', 'completed'].includes(order.status) ? 'completed' : ''} ${order.status === 'cancelled' ? 'cancelled' : ''}">
+                            <div class="step-icon">${['in_progress', 'revision', 'completed'].includes(order.status) ? '✓' : '2'}</div>
+                            <div class="step-info">
+                                <span class="step-title">Sedang Dikerjakan</span>
+                                <span class="step-desc">Desain sedang dalam pengerjaan</span>
+                            </div>
+                        </div>
+                        <div class="timeline-step ${order.status === 'revision' ? 'active' : ''} ${order.status === 'completed' ? 'completed' : ''} ${order.status === 'cancelled' ? 'cancelled' : ''}">
+                            <div class="step-icon">${order.status === 'completed' ? '✓' : '3'}</div>
+                            <div class="step-info">
+                                <span class="step-title">Review & Revisi</span>
+                                <span class="step-desc">Menunggu feedback dari Anda</span>
+                            </div>
+                        </div>
+                        <div class="timeline-step ${order.status === 'completed' ? 'completed' : ''} ${order.status === 'cancelled' ? 'cancelled' : ''}">
+                            <div class="step-icon">${order.status === 'completed' ? '✓' : '4'}</div>
+                            <div class="step-info">
+                                <span class="step-title">Selesai</span>
+                                <span class="step-desc">File final telah dikirim</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-details">
+                        <h3>Detail Pesanan</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Judul</span>
+                                <span class="detail-value">${order.judul}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Nama</span>
+                                <span class="detail-value">${order.name}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Ukuran</span>
+                                <span class="detail-value">${order.ukuran || '-'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Update Terakhir</span>
+                                <span class="detail-value">${formatDate(order.updated_at)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Media Section -->
+                    <div class="result-media" style="padding: 0 24px; margin-top: 24px;">
+                        <h3 style="margin-bottom: 16px;">Media & Referensi</h3>
+                        <label class="media-upload-box" style="display:block;padding:20px;border:2px dashed #2a2a2e;border-radius:8px;text-align:center;cursor:pointer;margin-bottom:16px;background:rgba(255,255,255,0.02);transition:all 0.2s;">
+                            <input type="file" accept="image/*" multiple id="track-media-upload" style="display:none" data-order-id="${order.id}">
+                            <span style="color:#888;font-size:14px;">📁 Klik untuk upload gambar tambahan</span>
+                        </label>
+                        <div id="track-upload-status" style="margin-bottom:16px;"></div>
+                        <div id="track-media-grid" class="media-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;">
+                        </div>
+                    </div>
+                    
+                    <div class="result-footer">
+                        <p>Ada pertanyaan? Hubungi kami via WhatsApp</p>
+                        <a href="https://wa.me/6282343038794?text=Halo, saya ingin bertanya tentang order ${order.order_number}" target="_blank" class="btn btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            Chat WhatsApp
+                        </a>
+                    </div>
+                </div>
+            `;
+                // Load and attach media handlers
+                loadTrackMedia(order.id);
+                attachMediaUploadHandler(order.id);
+            }
+
+            function getStatusInfo(status) {
+                const info = {
+                    'pending': { label: 'Menunggu', color: '#f59e0b' },
+                    'in_progress': { label: 'Dikerjakan', color: '#8b5cf6' },
+                    'revision': { label: 'Revisi', color: '#ec4899' },
+                    'completed': { label: 'Selesai', color: '#22c55e' },
+                    'cancelled': { label: 'Dibatalkan', color: '#ef4444' }
+                };
+                return info[status] || { label: status, color: '#9ca3af' };
+            }
+
+            function formatDate(dateString) {
+                return new Date(dateString).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
+
+            // Load media for order
+            async function loadTrackMedia(orderId) {
+                const grid = document.getElementById('track-media-grid');
+                if (!grid) return;
+
+                const { data, error } = await supabaseClient.from('order_media').select('*').eq('order_id', orderId).order('created_at', { ascending: false });
+
+                if (!data || data.length === 0) {
+                    grid.innerHTML = '<p style="color:#666;font-size:14px;grid-column:1/-1;text-align:center;padding:20px;">Belum ada media</p>';
+                    return;
+                }
+
+                grid.innerHTML = data.map(m => `
+                    <div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#111;">
+                        <img src="${m.image_url}" alt="" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onclick="window.open('${m.image_url}','_blank')">
+                    </div>
+                `).join('');
+            }
+
+            // Attach upload handler
+            function attachMediaUploadHandler(orderId) {
+                const input = document.getElementById('track-media-upload');
+                if (!input) return;
+
+                input.addEventListener('change', async function (e) {
+                    const files = e.target.files;
+                    if (!files.length) return;
+
+                    const statusEl = document.getElementById('track-upload-status');
+                    statusEl.innerHTML = '<div style="display:flex;gap:8px;align-items:center;"><div style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.2);border-top-color:#3b82f6;border-radius:50%;animation:spin 0.8s linear infinite;"></div><span style="color:#888;font-size:14px;">Mengupload...</span></div>';
+
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const fileName = `order-${orderId}-${Date.now()}-${i}.${file.name.split('.').pop()}`;
+
+                        const { error } = await supabaseClient.storage.from('images').upload(fileName, file);
+                        if (!error) {
+                            const { data: urlData } = supabaseClient.storage.from('images').getPublicUrl(fileName);
+                            await supabaseClient.from('order_media').insert({
+                                order_id: orderId,
+                                image_url: urlData.publicUrl,
+                                uploaded_by: 'customer'
+                            });
+                        }
+                    }
+
+                    statusEl.innerHTML = '<span style="color:#22c55e;">✓ Upload selesai!</span>';
+                    loadTrackMedia(orderId);
+                    setTimeout(() => { statusEl.innerHTML = ''; }, 2000);
+                    input.value = '';
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>
