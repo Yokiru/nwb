@@ -1224,6 +1224,22 @@
         font-size: 1.5rem;
     }
 
+    /* Date Filter Mobile */
+    .date-filter {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .date-filter input,
+    .date-filter button {
+        width: 100%;
+    }
+
+    .date-filter span {
+        display: none;
+    }
+
     /* Adjust tables */
     .table-container {
         overflow-x: auto;

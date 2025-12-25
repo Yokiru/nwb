@@ -585,6 +585,33 @@
                 transform: rotate(360deg);
             }
         }
+
+        @media (max-width: 600px) {
+            .price-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .price-input {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+
+            .btn-save {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .price-prefix {
+                margin-bottom: 4px;
+            }
+
+            .price-section {
+                gap: 16px;
+            }
+
+            /* Date Filter on Dashboard if present (it's not here but good practice) */
+        }
     </style>
 </head>
 
