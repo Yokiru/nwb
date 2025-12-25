@@ -1,0 +1,21 @@
+{
+    "rewrites": [
+        {
+            "source": "/order",
+            "destination": "/order.html"
+        },
+        {
+            "source": "/track",
+            "destination": "/track.html"
+        },
+        {
+            "source": "/admin",
+            "destination": "/admin.html"
+        },
+        {
+            "source": "/order-detail",
+            "destination": "/order-detail.html"
+        }
+    ],
+    "cleanUrls": true
+}
