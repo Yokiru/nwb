@@ -28,13 +28,21 @@
             </a>
 
             <ul class="nav-menu">
-                <li><a href="#work" class="nav-link">Work</a></li>
-                <li><a href="#services" class="nav-link">Services</a></li>
-                <li><a href="order.html" class="nav-link">Order</a></li>
-                <li><a href="track.html" class="nav-link">Track Order</a></li>
+                <li><a href="#work" class="nav-link" data-i18n="nav.work">Work</a></li>
+                <li><a href="#services" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="order.html" class="nav-link" data-i18n="nav.order">Order</a></li>
+                <li><a href="track.html" class="nav-link" data-i18n="nav.track">Track Order</a></li>
             </ul>
 
-            <a href="order.html" class="nav-cta">Get Started</a>
+            <a href="order.html" class="nav-cta" data-i18n="nav.get_started">Get Started</a>
+
+            <div class="lang-switch" style="margin-left: 20px; display: flex; gap: 8px; color: white;">
+                <button onclick="setLanguage('en')" class="lang-btn" data-lang="en"
+                    style="background:none; border:none; color:inherit; cursor:pointer; padding:0; font-family:inherit;">EN</button>
+                <span>|</span>
+                <button onclick="setLanguage('id')" class="lang-btn" data-lang="id"
+                    style="background:none; border:none; color:inherit; cursor:pointer; padding:0; font-family:inherit;">ID</button>
+            </div>
 
             <button class="mobile-toggle" aria-label="Toggle menu">
                 <span></span>
@@ -50,22 +58,22 @@
             <div class="hero-content">
                 <div class="hero-badge" data-animate="fade-up">
                     <span class="badge-dot"></span>
-                    <span>OPEN FOR PROJECTS</span>
+                    <span data-i18n="hero.badge">OPEN FOR PROJECTS</span>
                 </div>
 
-                <h1 class="hero-title" data-animate="fade-up" data-delay="100">
+                <h1 class="hero-title" data-animate="fade-up" data-delay="100" data-i18n="hero.title">
                     Crafting Stunning Esport<br>
                     & Sport Poster Designs.
                 </h1>
 
-                <p class="hero-description" data-animate="fade-up" data-delay="200">
+                <p class="hero-description" data-animate="fade-up" data-delay="200" data-i18n="hero.description">
                     Hi, I'm a poster designer who transforms your team
                     into eye-catching, professional poster designs.
                 </p>
 
                 <div class="hero-buttons" data-animate="fade-up" data-delay="300">
-                    <a href="order.html" class="btn btn-primary">Order Now</a>
-                    <a href="#work" class="btn btn-secondary">View Work</a>
+                    <a href="order.html" class="btn btn-primary" data-i18n="hero.order_now">Order Now</a>
+                    <a href="#work" class="btn btn-secondary" data-i18n="hero.view_work">View Work</a>
                 </div>
             </div>
         </div>
@@ -75,9 +83,9 @@
     <section class="services" id="services">
         <div class="services-container">
             <div class="services-header" data-animate="fade-up">
-                <span class="section-badge">SERVICES</span>
-                <h2 class="services-title">Professional poster designs<br>for your team.</h2>
-                <p class="services-description">
+                <span class="section-badge" data-i18n="services.badge">SERVICES</span>
+                <h2 class="services-title" data-i18n="services.title">Professional poster designs<br>for your team.</h2>
+                <p class="services-description" data-i18n="services.description">
                     I specialize in crafting eye-catching posters for esports teams, gaming events,
                     and sports organizations. Let's create something extraordinary together.
                 </p>
@@ -86,8 +94,9 @@
             <div class="services-grid" data-animate-children>
                 <!-- Esport Poster -->
                 <div class="service-card">
-                    <h3 class="service-title">Esport Poster</h3>
-                    <p class="service-description">Dynamic designs for esports teams, featuring player showcases and
+                    <h3 class="service-title" data-i18n="services.esport.title">Esport Poster</h3>
+                    <p class="service-description" data-i18n="services.esport.desc">Dynamic designs for esports teams,
+                        featuring player showcases and
                         team branding.</p>
                     <div class="service-preview">
                         <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop"
@@ -97,8 +106,9 @@
 
                 <!-- Tournament Poster -->
                 <div class="service-card">
-                    <h3 class="service-title">Tournament Poster</h3>
-                    <p class="service-description">Professional event graphics for gaming tournaments and competitions.
+                    <h3 class="service-title" data-i18n="services.tournament.title">Tournament Poster</h3>
+                    <p class="service-description" data-i18n="services.tournament.desc">Professional event graphics for
+                        gaming tournaments and competitions.
                     </p>
                     <div class="service-preview">
                         <img src="https://images.unsplash.com/photo-1511882150382-421056c89033?w=400&h=300&fit=crop"
@@ -108,8 +118,9 @@
 
                 <!-- Game Poster -->
                 <div class="service-card">
-                    <h3 class="service-title">Game Poster</h3>
-                    <p class="service-description">Stunning artwork for game launches, updates, and promotional
+                    <h3 class="service-title" data-i18n="services.game.title">Game Poster</h3>
+                    <p class="service-description" data-i18n="services.game.desc">Stunning artwork for game launches,
+                        updates, and promotional
                         campaigns.</p>
                     <div class="service-preview">
                         <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=400&h=300&fit=crop"
@@ -119,8 +130,9 @@
 
                 <!-- Sport Poster -->
                 <div class="service-card">
-                    <h3 class="service-title">Sport Poster</h3>
-                    <p class="service-description">Bold designs for sports teams, athletes, and sporting events.</p>
+                    <h3 class="service-title" data-i18n="services.sport.title">Sport Poster</h3>
+                    <p class="service-description" data-i18n="services.sport.desc">Bold designs for sports teams,
+                        athletes, and sporting events.</p>
                     <div class="service-preview">
                         <img src="https://images.unsplash.com/photo-1461896836934- voices-of-the-river?w=400&h=300&fit=crop"
                             alt="Sport Poster Preview">
@@ -134,9 +146,9 @@
     <section class="work" id="work">
         <div class="work-header" data-animate="fade-up">
             <div class="work-header-content">
-                <span class="section-badge">WORK</span>
-                <h2 class="work-title">My recent poster designs<br>for clients.</h2>
-                <p class="work-description">
+                <span class="section-badge" data-i18n="work.badge">WORK</span>
+                <h2 class="work-title" data-i18n="work.title">My recent poster designs<br>for clients.</h2>
+                <p class="work-description" data-i18n="work.description">
                     A showcase of my latest work for esports teams, gaming events,
                     and sports organizations. Quality designs that make an impact.
                 </p>
@@ -163,37 +175,43 @@
     <section class="process" id="process">
         <div class="process-container">
             <div class="process-header" data-animate="fade-up">
-                <span class="section-badge">PROCESS</span>
-                <h2 class="process-title">My Design Process: From<br>Concept to Completion</h2>
-                <p class="process-description">
+                <span class="section-badge" data-i18n="process.badge">PROCESS</span>
+                <h2 class="process-title" data-i18n="process.title">My Design Process: From<br>Concept to Completion
+                </h2>
+                <p class="process-description" data-i18n="process.description">
                     Every project is unique, but the path to great design is built on a clear and thoughtful approach.
                 </p>
             </div>
 
             <div class="process-grid" data-animate-children>
                 <div class="process-step">
-                    <span class="step-number">01. FORM</span>
-                    <p class="step-description">Submit your project details through our simple order form.</p>
+                    <span class="step-number" data-i18n="process.step1.title">01. FORM</span>
+                    <p class="step-description" data-i18n="process.step1.desc">Submit your project details through our
+                        simple order form.</p>
                 </div>
 
                 <div class="process-step">
-                    <span class="step-number">02. FREE CONSULT</span>
-                    <p class="step-description">We discuss your vision, goals, and requirements at no cost.</p>
+                    <span class="step-number" data-i18n="process.step2.title">02. FREE CONSULT</span>
+                    <p class="step-description" data-i18n="process.step2.desc">We discuss your vision, goals, and
+                        requirements at no cost.</p>
                 </div>
 
                 <div class="process-step">
-                    <span class="step-number">03. IDEA</span>
-                    <p class="step-description">Brainstorm concepts and explore creative directions together.</p>
+                    <span class="step-number" data-i18n="process.step3.title">03. IDEA</span>
+                    <p class="step-description" data-i18n="process.step3.desc">Brainstorm concepts and explore creative
+                        directions together.</p>
                 </div>
 
                 <div class="process-step">
-                    <span class="step-number">04. DESIGN</span>
-                    <p class="step-description">Create high-quality poster designs based on approved concepts.</p>
+                    <span class="step-number" data-i18n="process.step4.title">04. DESIGN</span>
+                    <p class="step-description" data-i18n="process.step4.desc">Create high-quality poster designs based
+                        on approved concepts.</p>
                 </div>
 
                 <div class="process-step">
-                    <span class="step-number">05. DELIVER</span>
-                    <p class="step-description">Receive your final files in all formats you need.</p>
+                    <span class="step-number" data-i18n="process.step5.title">05. DELIVER</span>
+                    <p class="step-description" data-i18n="process.step5.desc">Receive your final files in all formats
+                        you need.</p>
                 </div>
             </div>
         </div>
@@ -204,15 +222,15 @@
         <div class="footer-container">
             <!-- Footer Navigation -->
             <nav class="footer-nav" data-animate="fade-up">
-                <a href="#" class="footer-link">Home</a>
+                <a href="#" class="footer-link" data-i18n="nav.home">Home</a>
                 <span class="footer-divider">·</span>
-                <a href="#services" class="footer-link">Services</a>
+                <a href="#services" class="footer-link" data-i18n="nav.services">Services</a>
                 <span class="footer-divider">·</span>
-                <a href="#process" class="footer-link">Process</a>
+                <a href="#process" class="footer-link" data-i18n="nav.process">Process</a>
                 <span class="footer-divider">·</span>
-                <a href="order.html" class="footer-link">Order</a>
+                <a href="order.html" class="footer-link" data-i18n="nav.order">Order</a>
                 <span class="footer-divider">·</span>
-                <a href="#contact" class="footer-link">Contact</a>
+                <a href="#contact" class="footer-link" data-i18n="nav.contact">Contact</a>
             </nav>
 
             <!-- Large Brand Name -->
@@ -222,7 +240,7 @@
 
             <!-- Footer Bottom -->
             <div class="footer-bottom">
-                <p class="footer-copyright">© 2025 All rights reserved. Made by oci</p>
+                <p class="footer-copyright" data-i18n="footer.copyright">© 2025 All rights reserved. Made by oci</p>
                 <div class="footer-socials">
                     <a href="https://www.instagram.com/nwb.creative/" target="_blank" class="social-icon"
                         aria-label="Instagram">
@@ -239,6 +257,41 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/translations.js"></script>
+    <script>
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            localStorage.setItem('nwb_lang', lang);
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Update buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+                btn.style.opacity = btn.dataset.lang === lang ? '1' : '0.5';
+                btn.style.fontWeight = btn.dataset.lang === lang ? '700' : '400';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('nwb_lang');
+            const userLang = navigator.language || navigator.userLanguage;
+            let defaultLang = 'en';
+
+            if (savedLang) {
+                defaultLang = savedLang;
+            } else if (userLang.toLowerCase().includes('id') || userLang.toLowerCase().includes('ind')) {
+                defaultLang = 'id';
+            }
+
+            setLanguage(defaultLang);
+        });
+    </script>
     <script src="oci-editor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
