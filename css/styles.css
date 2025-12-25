@@ -1148,4 +1148,17 @@ img {
     .services-grid {
         grid-template-columns: 1fr;
     }
+
+    .hero-buttons {
+        flex-wrap: nowrap;
+        gap: 10px;
+    }
+
+    .hero-buttons .btn {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.95rem;
+        white-space: nowrap;
+        flex: 1;
+        text-align: center;
+    }
 }
