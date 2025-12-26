@@ -296,25 +296,33 @@
         }
 
         .current-price {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid #1a1a1c;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #2a2a2e;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .current-price>div {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .current-price-label {
-            font-size: 12px;
-            color: #666;
+            font-size: 11px;
+            color: #888;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            font-weight: 500;
         }
 
         .current-price-value {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             color: #fff;
+            letter-spacing: -0.02em;
         }
 
         /* Toast Notification */
