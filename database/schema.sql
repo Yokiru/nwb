@@ -8,7 +8,7 @@ CREATE TABLE orders (
     whatsapp VARCHAR(20) NOT NULL,
     email VARCHAR(255),
     judul VARCHAR(500) NOT NULL,
-    konsep TEXT NOT NULL,
+    konsep TEXT,
     teks_tambahan TEXT,
     logo TEXT,
     warna VARCHAR(100),
